@@ -1,6 +1,7 @@
 # Data analysis using pandas
 Objective: Perform data analysis using pandas on csv file. Visualize data using graphs and arrays, create a business dashboard.
-
+Result:  
+![minesweepergif](showcase/businessdashboard.gif)  
 Dataset: https://calmcode.io/datasets/bigmac  
 # Requirements
 - Python 3.11

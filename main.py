@@ -36,7 +36,7 @@ def main():
                        initial_sidebar_state="expanded")
     
     # Options
-    st.sidebar.header("Dashboard")
+    st.sidebar.header("Dashboard Options")
     selected_country = st.sidebar.selectbox('Country',country_list)
     selected_value_type = st.sidebar.selectbox('Value Type',value_type_list)
     time_constraint = st.sidebar.toggle(label="Date constraint")
@@ -67,12 +67,6 @@ Explore how prices of **Big Mac** changed over time
     group = df.loc[mask]
     if time_constraint and date_start != None and date_end != None:
         group = group.loc[(pd.to_datetime(group['date']) >= pd.to_datetime(date_start)) & (pd.to_datetime(group['date']) <= pd.to_datetime(date_end))]
-    
-    #group = group.drop(['currency_code','name'],axis=1)
-    # Removing elements present in other list using list comprehension
-    #skipped_value_type = [i for i in value_type_list if i not in selected_value_type]
-    #print(skipped_value_type)
-    #group = group.drop(skipped_value_type,axis=1)
 
     st.bar_chart(group,x="date",x_label="Date",y=selected_value_type,y_label=labelY,color="#f54e42")
     st.line_chart(group,x="date",x_label="Date",y=selected_value_type,y_label=labelY,color="#7bf542")
@@ -82,10 +76,25 @@ Explore how prices of **Big Mac** changed over time
     maxValue = group[selected_value_type].max()
     minRow = group.loc[group[selected_value_type]==minValue]
     maxRow = group.loc[group[selected_value_type]==maxValue]
-    st.write("Lowest Values:", minRow)
-    st.write("Highest Values:", maxRow)
-    st.page_link("https://calmcode.io/datasets/bigmac", label="DataSet", icon="💾")
-    st.page_link("https://github.com/Mikulej/analysis-pandas", label="Repository", icon="📕")
+
+    containerEdgeValues1 = st.columns(2)
+    tile = containerEdgeValues1[0].container(border=False)
+    tile.write("Lowest Values:")
+    tile = containerEdgeValues1[1].container(border=False)
+    tile.write("Highest Values:")
+
+    containerEdgeValues2 = st.columns(2)
+    tile = containerEdgeValues2[0].container(border=False)
+    tile.write(minRow)
+    tile = containerEdgeValues2[1].container(border=False)
+    tile.write(maxRow)
+
+    containerLinks = st.columns(8)
+    tile = containerLinks[0].container(height=60,border=False)
+    tile.page_link("https://calmcode.io/datasets/bigmac", label="DataSet", icon="💾")
+    tile = containerLinks[1].container(height=60,border=False)
+    tile.page_link("https://github.com/Mikulej/analysis-pandas", label="Repository", icon="📕")
+
 
 
 if __name__ == "__main__":
